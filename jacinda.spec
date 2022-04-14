@@ -13,11 +13,11 @@
 %global pkgver %{pkg_name}-%{version}
 
 Name:           %{pkg_name}
-Version:        0.1.0.0
+Version:        0.3.0.0
 Release:        1%{?dist}
 Summary:        Functional, expression-oriented data processing language
 
-License:        GPLv3+
+License:        AGPLv3
 Url:            https://hackage.haskell.org/package/%{name}
 # Begin cabal-rpm sources:
 Source0:        https://hackage.haskell.org/package/%{pkgver}/%{pkgver}.tar.gz
@@ -30,6 +30,8 @@ BuildRequires:  ghc-array-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
 #BuildRequires:  ghc-jacinda-lib-devel
 BuildRequires:  ghc-microlens-devel
 BuildRequires:  ghc-microlens-mtl-devel
@@ -38,6 +40,7 @@ BuildRequires:  ghc-optparse-applicative-devel
 BuildRequires:  ghc-prettyprinter-devel
 #BuildRequires:  ghc-recursion-devel
 #BuildRequires:  ghc-regex-rure-devel
+BuildRequires:  ghc-split-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-transformers-devel
 BuildRequires:  ghc-vector-devel
@@ -47,6 +50,7 @@ BuildRequires:  cabal-install > 1.18
 # End cabal-rpm deps
 BuildRequires:  librure-devel
 BuildRequires:  gcc-c++
+BuildRequires:  ghc-unix-devel
 
 %description
 APL meets AWK. A command-line tool for summarizing and reporting, powered by
@@ -73,7 +77,7 @@ cabal install
 # Begin cabal-rpm install
 mkdir -p %{buildroot}%{_bindir}
 %if 0%{?fedora} >= 33 || 0%{?rhel} > 8
-cabal install --install-method=copy --installdir=%{buildroot}%{_bindir}
+cabal install --install-method=copy --enable-executable-stripping --installdir=%{buildroot}%{_bindir}
 %else
 for i in .cabal-sandbox/bin/*; do
 strip -s -o %{buildroot}%{_bindir}/$(basename $i) $i
@@ -86,17 +90,25 @@ mkdir -p %{buildroot}%{_datadir}/bash-completion/completions/
 mkdir -p %{buildroot}%{_mandir}/man1/
 cp -p man/ja.1 %{buildroot}%{_mandir}/man1/
 
+mkdir -p %{buildroot}%{_datadir}/%{pkgver}
+cp -pr prelude lib %{buildroot}%{_datadir}/%{pkgver}
+
 
 %files
 # Begin cabal-rpm files:
-%license LICENSE
-%doc CHANGELOG.md README.md
+%license COPYING
+%doc CHANGELOG.md README.md examples
 %{_bindir}/ja
+%{_datadir}/%{pkgver}
 %{_datadir}/bash-completion/completions/ja
 # End cabal-rpm files
 %{_mandir}/man1/ja.1*
 
 
 %changelog
+* Sun Jan 30 2022 Jens Petersen <petersen@redhat.com> - 0.3.0.0-1
+- update to 0.3.0
+- copy in data files by hand
+
 * Mon Jan 10 2022 Jens Petersen <petersen@redhat.com> - 0.1.0.0-1
 - initial packaging
