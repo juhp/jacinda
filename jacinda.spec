@@ -13,7 +13,7 @@
 %global pkgver %{pkg_name}-%{version}
 
 Name:           %{pkg_name}
-Version:        0.3.0.0
+Version:        1.1.0.0
 Release:        1%{?dist}
 Summary:        Functional, expression-oriented data processing language
 
@@ -50,6 +50,7 @@ BuildRequires:  cabal-install > 1.18
 # End cabal-rpm deps
 BuildRequires:  librure-devel
 BuildRequires:  gcc-c++
+BuildRequires:  ghc-dlist-devel
 BuildRequires:  ghc-unix-devel
 
 %description
@@ -106,6 +107,9 @@ cp -pr prelude lib %{buildroot}%{_datadir}/%{pkgver}
 
 
 %changelog
+* Thu Apr 14 2022 Jens Petersen <petersen@redhat.com> - 1.1.0.0-1
+- https://hackage.haskell.org/package/jacinda-1.1.0.0/changelog
+
 * Sun Jan 30 2022 Jens Petersen <petersen@redhat.com> - 0.3.0.0-1
 - update to 0.3.0
 - copy in data files by hand
