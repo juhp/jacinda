@@ -27,8 +27,7 @@ Source0:        https://hackage.haskell.org/package/%{pkgver}/%{pkgver}.tar.gz
 
 BuildRequires:  ghc-rpm-macros
 %if %{with ghc9}
-BuildRequires:  ghc9.0-devel
-BuildRequires:  ghc9.0-compiler-default
+BuildRequires:  ghc9.2-devel
 %else
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-array-devel
@@ -80,7 +79,7 @@ cabal update
 %install
 # Begin cabal-rpm install
 mkdir -p %{buildroot}%{_bindir}
-cabal install --install-method=copy --enable-executable-stripping --installdir=%{buildroot}%{_bindir}
+cabal install -w ghc-9.2.2 --install-method=copy --enable-executable-stripping --installdir=%{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_datadir}/bash-completion/completions/
 %{buildroot}%{_bindir}/ja --bash-completion-script ja | sed s/filenames/default/ > %{buildroot}%{_datadir}/bash-completion/completions/ja
 # End cabal-rpm install
@@ -106,7 +105,7 @@ cp -pr prelude lib %{buildroot}%{_datadir}/%{pkgver}
 %changelog
 * Thu Apr 14 2022 Jens Petersen <petersen@redhat.com> - 1.1.0.0-1
 - https://hackage.haskell.org/package/jacinda-1.1.0.0/changelog
-- build with ghc9.0
+- build with ghc9.2
 
 * Sun Jan 30 2022 Jens Petersen <petersen@redhat.com> - 0.3.0.0-1
 - update to 0.3.0
