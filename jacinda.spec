@@ -15,7 +15,7 @@
 %global pkgver %{pkg_name}-%{version}
 
 Name:           %{pkg_name}
-Version:        1.1.0.0
+Version:        1.2.0.0
 Release:        1%{?dist}
 Summary:        Functional, expression-oriented data processing language
 
@@ -60,8 +60,8 @@ BuildRequires:  librure-devel
 BuildRequires:  gcc-c++
 
 %description
-APL meets AWK. A command-line tool for summarizing and reporting, powered by
-Rust's [regex](https://docs.rs/regex/regex/) library.
+APL meets AWK. A command-line tool for summarizing and reporting,
+powered by Rust's regex library.
 
 
 %prep
@@ -103,6 +103,9 @@ cp -pr prelude lib %{buildroot}%{_datadir}/%{pkgver}
 
 
 %changelog
+* Tue May 16 2023 Jens Petersen <petersen@redhat.com> - 1.2.0.0-1
+- https://hackage.haskell.org/package/jacinda-1.2.0.0/changelog
+
 * Thu Apr 14 2022 Jens Petersen <petersen@redhat.com> - 1.1.0.0-1
 - https://hackage.haskell.org/package/jacinda-1.1.0.0/changelog
 - build with ghc9.2
